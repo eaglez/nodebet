@@ -1,0 +1,14 @@
+<section data-ng-controller="GamesController" data-ng-init="findOne()">
+  <span>{{game.created | date:'medium'}}</span> /
+  <span>{{game.creastedBy.name}}</span>
+  <h2>{{game.start}} {{game.home}} - {{game.visitors}} </h2>
+  <div data-ng-if="hasAuthorization(game)">
+    <a class="btn" href="/#!/games/{{game._id}}/edit">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn" data-ng-click="remove(game);">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <div>{{game.homeScore}} - {{game.visitorsScore}}</div>
+</section>
