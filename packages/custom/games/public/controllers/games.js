@@ -7,15 +7,23 @@ angular.module('mean.games').controller('GamesController', ['$scope', '$statePar
       if (!game || !game.createdBy) return false;
       return $scope.global.isAdmin || game.createdBy._id === $scope.global.user._id;
     };
+    
 
     $scope.create = function(isValid) {
+        console.info(this);
+        console.info(this.game.starttime);
       if (isValid) {
+
         var game = new Games({
-          home: this.home,
-          visitors: this.visitors,
-          start: this.start
+          home: this.game.home,
+          visitors: this.game.visitors,
+          start: this.game.start
         });
+        console.info("save");
+        console.info(game);
+        
         game.$save(function(response) {
+            console.info(response);
           $location.path('games/' + response._id);
         });
 
@@ -27,11 +35,15 @@ angular.module('mean.games').controller('GamesController', ['$scope', '$statePar
     };
 
     $scope.remove = function(game) {
+        console.log("remove");
       if (game) {
         game.$remove(function(response) {
           for (var i in $scope.games) {
+            console.info('current game: ' + $scope.games[i]);
+
             if ($scope.games[i] === game) {
-	      $scope.games.splice(i,1);
+                console.info("remove");
+    	      $scope.games.splice(i,1);
             }
           }
           $location.path('games');

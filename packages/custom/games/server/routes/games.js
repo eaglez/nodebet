@@ -4,7 +4,7 @@ var games = require('../controllers/games');
 
 // Article authorization helpers
 var hasAuthorization = function(req, res, next) {
-  if (!req.user.isAdmin && req.article.user.id !== req.user.id) {
+  if (!req.user.isAdmin && req.game.createdBy.id !== req.user.id) {
     return res.status(401).send('User is not authorized');
   }
   next();

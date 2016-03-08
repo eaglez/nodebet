@@ -15,7 +15,7 @@ exports.game = function(req, res, next, id) {
   Game.load(id, function(err, game) {
     if (err) return next(err);
     if (!game) return next(new Error('Failed to load game ' + id));
-    req.article = game;
+    req.game = game;
     next();
   });
 };
@@ -24,6 +24,7 @@ exports.game = function(req, res, next, id) {
  * Create an game
  */
 exports.create = function(req, res) {
+    console.info("create");
   var game = new Game(req.body);
   game.createdBy = req.user;
 
@@ -47,6 +48,7 @@ exports.update = function(req, res) {
   game = _.extend(game, req.body);
 
   game.save(function(err) {
+      console.info("save");
     if (err) {
       return res.status(500).json({
         error: 'Cannot update the game'
@@ -61,8 +63,9 @@ exports.update = function(req, res) {
  * Delete an game
  */
 exports.destroy = function(req, res) {
+    console.info("destory");
   var game = req.game;
-
+    console.info(req);
   game.remove(function(err) {
     if (err) {
       return res.status(500).json({
